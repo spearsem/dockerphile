@@ -19,6 +19,7 @@ def SHELL(shell_spec):
 
     Raises:
         DockerphileError: raised when `shell_spec` argument is misspecified.
+
     """
     msg = ''
     if not isinstance(shell_spec, (list, tuple)):

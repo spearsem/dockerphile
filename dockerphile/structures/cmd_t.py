@@ -42,6 +42,7 @@ def CMD(exec_form=None, default_form=None, shell_form=None):
     Raises:
         DockerphileError: raised for any errors when specifying the CMD form
             arguments.
+
     """
     kwargs = {"exec_form": exec_form,
               "default_form": default_form,

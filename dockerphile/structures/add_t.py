@@ -22,10 +22,13 @@ def ADD(resources):
     Raises:
         DockerphileError: raised when `resources` argument is not specified
             in a compatible way.
+
     """
     msg = ''
     if not isinstance(resources, (list, tuple)):
-        msg = 'ADD instruction requires list or tuple, not %s' % type(resources)
+        msg = 'ADD instruction requires list or tuple, not %s' % type(
+            resources
+        )
     elif len(resources) < 2:
         msg = 'ADD instruction must have at least 1 src and 1 dest URI.'
     if msg:

@@ -18,6 +18,7 @@ def EXPOSE(port_specs):
 
     Raises:
         DockerphileError: raised when `port_specs` argument is misspecified.
+
     """
     msg = ''
     if not isinstance(port_specs, (list, tuple)):

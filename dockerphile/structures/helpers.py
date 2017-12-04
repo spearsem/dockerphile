@@ -7,7 +7,7 @@ def _check_format(instruction, arg, argname):
     if not isinstance(arg, (list, tuple)):
         msg = '%s %s requires list or tuple of strings, not %s' % (
             instruction,
-            argname, 
+            argname,
             type(arg)
         )
     if not len(arg) >= 1:

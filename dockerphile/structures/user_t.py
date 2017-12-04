@@ -10,7 +10,8 @@ def USER(user, group=None):
     """Create a Dockerfile USER instruction.
 
     Args:
-        user: string containing username or UID for Dockerfile USER instruction.
+        user: string containing username or UID for Dockerfile USER
+            instruction.
         group: Optional string containing a group name or ID for the user.
 
     Returns:
@@ -19,6 +20,7 @@ def USER(user, group=None):
     Raises:
         DockerphileError: raised for any errors when specifying `user` or
         `group`.
+
     """
     msg = ''
     if not isinstance(user, str):
@@ -27,4 +29,4 @@ def USER(user, group=None):
         msg = 'USER parameter `group` requires string, not %s' % type(group)
     if msg:
         raise DockerphileError(msg)
-    return GROUP_t(user=user, group=group)
+    return USER_t(user=user, group=group)

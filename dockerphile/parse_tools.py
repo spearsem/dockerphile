@@ -1,5 +1,7 @@
 import re
 
+from dockerfile import parse_string
+
 from dockerphile import structures
 from dockerphile.errors import DockerphileError
 
@@ -29,6 +31,7 @@ def parse_escape_directive(source):
 
     Raises:
         Nothing.
+
     """
     blank = True
     with open(source, 'r') as _file:
@@ -59,12 +62,12 @@ def to_instruction(parsed_instruction):
         parsed_instruction: An instance of `dockerfile.Command`.
 
     Returns:
-        Either an instance of a `dockerphile.structures` namedtuple representing
-        the parsed command using `dockerphile` types, or a list of such types.
-        Return value is None for any underlying commands that are not supported
-        by `dockerphile` even if parsed correctly, such as `MAINTAINER` (since
-        `dockerphile` requires following Docker best practices to use `LABEL`
-        for a maintainer label.
+        Either an instance of a `dockerphile.structures` namedtuple
+        representing the parsed command using `dockerphile` types, or a list of
+        such types. Return value is None for any underlying commands that are
+        not supported by `dockerphile` even if parsed correctly, such as
+        `MAINTAINER` (since `dockerphile` requires following Docker best
+        practices to use `LABEL` for a maintainer label.
 
     Raises:
         DockerphileError: raised if incorrect instruction type is provided or
@@ -72,6 +75,7 @@ def to_instruction(parsed_instruction):
             Dockerfile syntax.
         dockerfile.GoParseError: raised if underlying `dockerfile` library
             Go parser encounters an unhandled parser error.
+
     """
     cmd, original = parsed_instruction.cmd, parsed_instruction.original
     uses_json, value = parsed_instruction.json, parsed_instruction.value
@@ -103,12 +107,11 @@ def to_instruction(parsed_instruction):
         if len(value) == 2:
             return structures.ENV(value[0], value[1])
         try:
-            result = [structures.ENV(value[k], value[k+1])
+            result = [structures.ENV(value[k], value[k + 1])
                       for k in range(len(value))[::2]]
         except IndexError:
-            raise DockerphileError(
-                "Unpaired index when parsing %s to list of ENV types." % value
-            )
+            raise DockerphileError("Unpaired index when parsing "
+                                   "%s to list of ENV types." % value)
         return result
     if cmd == 'expose':
         return structures.EXPOSE(value)
@@ -118,15 +121,13 @@ def to_instruction(parsed_instruction):
             image, as_ = parsed_from.groups()
             return structures.FROM(image, as_=as_)
         if not value:
-            raise DockerphileError(
-                "FROM instruction requires non-empty base image."
-            )
+            raise DockerphileError("FROM instruction requires nonempty base "
+                                   "image.")
         return structures.FROM(value[0])
     if cmd == 'healthcheck':
         if value and value[0] != 'CMD':
-            raise DockerphileError(
-                'Invalid CMD specifier for HEALTHCHECK: %s' % value[0]
-            )
+            raise DockerphileError("Invalid CMD specifier for HEALTHCHECK: "
+                                   "%s" % value[0])
         options = {
             'interval': re.match(healthcheck_interval, original),
             'timeout': re.match(healthcheck_timeout, original),
@@ -148,7 +149,7 @@ def to_instruction(parsed_instruction):
         if len(value) == 2:
             return structures.LABEL(value[0], value[1])
         try:
-            result = [structures.LABEL(value[k], value[k+1])
+            result = [structures.LABEL(value[k], value[k + 1])
                       for k in range(len(value))[::2]]
         except IndexError:
             msg = "Unpaired index when parsing %s to list of LABEL types."
@@ -158,11 +159,10 @@ def to_instruction(parsed_instruction):
         return None
     if cmd == 'onbuild':
         if parsed_instruction.sub_cmd == 'onbuild':
-            raise DockerphileError(
-                "ONBUILD is not allowed as sub-command of ONBUILD."
-            )
+            raise DockerphileError("ONBUILD is not allowed as subcommand of "
+                                   "ONBUILD.")
         sub_cmd_str = original.replace('ONBUILD', '')
-        parsed_sub_cmd = dockerfile.parse_string(sub_cmd_str)[0]
+        parsed_sub_cmd = parse_string(sub_cmd_str)[0]
         return structures.ONBUILD(to_instruction(parsed_sub_cmd))
     if cmd == 'run':
         return structures.RUN(**{
@@ -170,25 +170,20 @@ def to_instruction(parsed_instruction):
         })
     if cmd == "shell":
         if not uses_json:
-            raise DockerphileError(
-                "SHELL instruction requires used of JSON array option format."
-            )
+            raise DockerphileError("SHELL instruction requires used of JSON "
+                                   "array option format.")
         if not value:
-            raise DockerphileError(
-                "SHELL instruction requires non-empty JSON array option format."
-            )
+            raise DockerphileError("SHELL instruction requires nonempty JSON "
+                                   "array option format.")
         return structures.SHELL(value)
     if cmd == 'stopsignal':
         if not value:
-            raise DockerphileError(
-                "STOPSIGNAL instruction requires non-empty value."
-            )
+            raise DockerphileError("STOPSIGNAL instruction requires nonempty "
+                                   "value.")
         return structures.STOPSIGNAL(value[0])
     if cmd == 'user':
         if not value:
-            raise DockerphileError(
-                "USER instruction requires non-empty value."
-            )
+            raise DockerphileError("USER instruction requires nonempty value.")
         parsed_user_group = re.match(user_group, original)
         if parsed_user_group is not None:
             user, group = parsed_user_group.groups()
@@ -199,10 +194,8 @@ def to_instruction(parsed_instruction):
         return structures.VOLUME(value)
     if cmd == 'workdir':
         if not value:
-            raise DockerphileError(
-                "WORKDIR instruction requires non-empty value."
-            )
+            raise DockerphileError("WORKDIR instruction requires nonempty "
+                                   "value.")
         return structures.WORKDIR(value[0])
-    raise DockerphileError(
-        "Unrecognized dockerfile.Command parsed command %s" % cmd
-    )
+    raise DockerphileError("Unrecognized dockerfile.Command parsed command "
+                           "%s" % cmd)

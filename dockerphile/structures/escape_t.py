@@ -19,6 +19,7 @@ def ESCAPE(character):
 
     Raises:
         DockerphileError: raised for any errors when specifying `character`.
+
     """
     msg = ''
     if not isinstance(character, str):

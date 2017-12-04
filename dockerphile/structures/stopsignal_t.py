@@ -18,6 +18,7 @@ def STOPSIGNAL(signal):
 
     Raises:
         DockerphileError: raised for any errors when specifying `signal`.
+
     """
     msg = ''
     if not isinstance(signal, str):

@@ -38,6 +38,7 @@ def ENTRYPOINT(exec_form=None, shell_form=None):
     Raises:
         DockerphileError: raised for any errors when specifying the ENTRYPOINT
             form arguments.
+
     """
     kwargs = {"exec_form": exec_form, "shell_form": shell_form}
     if sum(v is not None for k, v in kwargs.items()) != 1:

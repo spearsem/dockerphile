@@ -35,6 +35,7 @@ def HEALTHCHECK(interval=None, timeout=None, start_period=None,
 
     Raises:
         DockerphileError: raised when arguments are misspecified.
+
     """
     parameters = {'interval': interval, 'timeout': timeout,
                   'start_period': start_period, 'retries': retries}

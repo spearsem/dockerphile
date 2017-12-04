@@ -1,5 +1,7 @@
 from collections import namedtuple
 
+from dockerphile.errors import DockerphileError
+
 
 ENV_t = namedtuple('ENV', ['key', 'value'])
 
@@ -17,6 +19,7 @@ def ENV(key, value):
     Raises:
         DockerphileError: raised for any errors when specifying `key` or
         `value`.
+
     """
     msg = ''
     if not isinstance(key, str):

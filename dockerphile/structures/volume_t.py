@@ -20,6 +20,7 @@ def VOLUME(volume_specs):
 
     Raises:
         DockerphileError: raised when `volume_specs` argument is misspecified.
+
     """
     msg = ''
     if not isinstance(volume_specs, (list, tuple)):

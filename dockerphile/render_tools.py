@@ -8,7 +8,8 @@ def render_instruction(instruction):
     """Render a string format of a dockerphile instruction.
 
     Args:
-        instruction: A dockerphile instruction type from dockerphile.structures.
+        instruction: A dockerphile instruction type from
+            `dockerphile.structures`.
 
     Returns:
         A string containing the rendered output of the given instruction.
@@ -16,6 +17,7 @@ def render_instruction(instruction):
     Raises:
         DockerphileError: raised when the input is not a valid dockerphile
             instruction type.
+
     """
     if isinstance(instruction, structures.ADD_t):
         result = "ADD"
@@ -25,7 +27,7 @@ def render_instruction(instruction):
     if isinstance(instruction, structures.ARG_t):
         result = "ARG %s" % instruction.key
         if instruction.default_value is not None:
-            result = result + "=%s" % default_value
+            result = result + "=%s" % instruction.default_value
         return result
     if isinstance(instruction, structures.CMD_t):
         result = "CMD"
@@ -77,7 +79,9 @@ def render_instruction(instruction):
         if instruction.timeout is not None:
             result = result + " \\\n  --timeout=%s" % instruction.timeout
         if instruction.start_period is not None:
-            result = result + " \\\n  --start-period=%s" % instruction.start_period
+            result = result + " \\\n  --start-period=%s" % (
+                instruction.start_period
+            )
         if instruction.retries is not None:
             result = result + " \\\n  --retries=%s" % instruction.retries
         if instruction.cmd is not None:
@@ -102,7 +106,7 @@ def render_instruction(instruction):
             commands = json.dumps(instruction.exec_form)
             return result + " " + commands
     if isinstance(instruction, structures.SHELL_t):
-        return "SHELL " +  json.dumps(instruction.shell_spec)
+        return "SHELL " + json.dumps(instruction.shell_spec)
     if isinstance(instruction, structures.STOPSIGNAL_t):
         return "STOPSIGNAL %s" % instruction.signal
     if isinstance(instruction, structures.USER_t):

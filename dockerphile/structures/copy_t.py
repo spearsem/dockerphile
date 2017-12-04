@@ -24,6 +24,7 @@ def COPY(resources, from_=None):
     Raises:
         DockerphileError: raised when `resources` or `from` arguments are not
             specified in a compatible way.
+
     """
     msg = ''
     if not isinstance(resources, (list, tuple)):

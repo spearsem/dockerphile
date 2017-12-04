@@ -33,9 +33,9 @@ def ONBUILD(instruction):
     must create an instance of `dockerphile.structures.copy_t.COPY_t`, and pass
     this object as the instruction argument to ONBUILD. Note that FROM_t,
     COMMENT_t and ONBUILD_t are not valid parameters for ONBUILD, and these
-    result in exceptions. Additionally, since ESCAPE maps to a parser directive,
-    not a instruction, and it must appear in a Dockerfile prior to any
-    instructions, ESCAPE is also considered invalid for ONBUILD.
+    result in exceptions. Additionally, since ESCAPE maps to a parser
+    directive, not a instruction, and it must appear in a Dockerfile prior to
+    any instructions, ESCAPE is also considered invalid for ONBUILD.
 
     Args:
         instruction: An instance of a valid dockerphile instruction. FROM and
@@ -51,6 +51,7 @@ def ONBUILD(instruction):
         DockerphileError: raised if `instruction` is a dockerphile instruction
             type that is invalid for ONBUILD or if `instruction` is not an
             instance of a dockerphile instruction.
+
     """
     msg = ''
     if not isinstance(instruction, VALID_TYPES):

@@ -18,6 +18,7 @@ def WORKDIR(workdir):
 
     Raises:
         DockerphileError: raised for any errors when specifying `workdir`.
+
     """
     msg = ''
     if not isinstance(workdir, str):

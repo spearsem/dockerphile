@@ -36,6 +36,7 @@ def RUN(shell_form=None, exec_form=None):
     Raises:
         DockerphileError: raised for any errors when specifying the RUN form
             arguments.
+
     """
     kwargs = {"exec_form": exec_form, "shell_form": shell_form}
     if sum(v is not None for k, v in kwargs.items()) != 1:

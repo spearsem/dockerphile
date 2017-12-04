@@ -22,6 +22,7 @@ def FROM(base_image, as_=None):
     Raises:
         DockerphileError: raised when `base_image` or `as_` arguments are
         misspecified.
+
     """
     msg = ''
     if not isinstance(base_image, str):

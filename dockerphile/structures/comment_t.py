@@ -21,6 +21,7 @@ def COMMENT(comment):
 
     Raises:
         DockerphileError: raised for any errors when specifying `comment`.
+
     """
     msg = ''
     if not isinstance(comment, str):

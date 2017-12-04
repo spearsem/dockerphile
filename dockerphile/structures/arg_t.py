@@ -11,8 +11,8 @@ def ARG(key, default_value=None):
 
     Args:
         key: string that names the Dockerfile build ARG.
-        default_value: string supplying the ARG default value (e.g. `key=value`)
-            in the Dockerfile.
+        default_value: string supplying the ARG default value (e.g.
+            `key=value`) in the Dockerfile.
 
     Returns:
         An instance of the ARG namedtuple.
@@ -20,6 +20,7 @@ def ARG(key, default_value=None):
     Raises:
         DockerphileError: raised for any errors when specifying `key` or
         `default_value`.
+
     """
     msg = ''
     if not isinstance(key, str):

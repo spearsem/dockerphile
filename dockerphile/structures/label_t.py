@@ -19,6 +19,7 @@ def LABEL(key, value):
     Raises:
         DockerphileError: raised for any errors when specifying `key` or
         `value`.
+
     """
     msg = ''
     if not isinstance(key, str):

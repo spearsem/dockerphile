@@ -9,12 +9,12 @@ from dockerphile.run_block import RunBlock
 
 def new_dockerfile(source=None):
     """Create a blank Dockerfile object.
-    
-    The blank document can have Dockerfile command representation appended to it
-    sequentially using the `dockerphile.Dockerfile` interface. Optionally, if a
-    path to a local source Dockerfile is specified with the `source` option,
-    then `dockerphile.Dockerfile` is initialized with the commands from that
-    source file.
+
+    The blank document can have Dockerfile command representation appended to
+    it sequentially using the `dockerphile.Dockerfile` interface. Optionally,
+    if a path to a local source Dockerfile is specified with the `source`
+    option, then `dockerphile.Dockerfile` is initialized with the commands from
+    that source file.
 
     Note that comment strings are ignored and are not converted into comment
     instructions in a `dockerphile.Dockerfile` initialized from a source file,
@@ -30,17 +30,19 @@ def new_dockerfile(source=None):
             used to initialize the `dockerphile.Dockerfile` commands.
 
     Returns:
-        An empty `dockerphile.dockerfile_tools.Dockerfile` instance. Optionally,
+        An empty `dockerphile.dockerfile_tools.Dockerfile` instance. Optionally
         returns an instance of `dockerphile.dockerfile_tools.Dockerfile` that
         has been initialized with commands from a Dockerfile source file.
 
     Raises:
         Nothing.
-    """        
+
+    """
     return Dockerfile(source=source)
 
 
 class Dockerfile:
+    """Programmatically create, modify and render Dockerfiles."""
 
     def __init__(self, source=None):
         """Create a new Dockerfile.
@@ -49,14 +51,15 @@ class Dockerfile:
         instance with the source Dockerfile commands.
 
         Args:
-            source: optional string naming a path to a source Dockerfile on disk
-                used to initialize the `dockerphile.Dockerfile` commands.
+            source: optional string naming a path to a source Dockerfile on
+                disk used to initialize the `dockerphile.Dockerfile` commands.
 
         Returns:
             Nothing. Instantiates `self` attributes for class instance created.
 
         Raises:
             Nothing.
+
         """
         self.sequence = []
         if source is not None:

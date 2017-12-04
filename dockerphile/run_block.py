@@ -1,7 +1,8 @@
 class RunBlock:
+    """Context manager for coalescing multiple RUN instructions."""
 
     def __init__(self, dockerfile, form='shell'):
-        """Create a RunBlock context.
+        r"""Create a RunBlock context.
 
         The context manager is for coalescing multiple RUN instructions into a
         single RUN instruction with multiple commands chained together with
@@ -21,6 +22,7 @@ class RunBlock:
             DockerphileError: raised if RUN instruction strings or format are
                 not provided correctly as they are passed to the
                 `dockerfile.run` command.
+
         """
         self.dockerfile = dockerfile
         self.form = form
@@ -33,12 +35,12 @@ class RunBlock:
     def __exit__(self, *args):
         """Write the coalesced RUN instruction to the Dockerfile on exit."""
         self.dockerfile.run(
-            ["\\\n  " + " && \\\n  ".join(self.sequence)], 
+            ["\\\n  " + " && \\\n  ".join(self.sequence)],
             form=self.form
         )
 
     def run(self, command):
-        """Append an isolated RUN instruction to a context manager.
+        r"""Append an isolated RUN instruction to a context manager.
 
         Args:
             command: A command string suitable for passing to `dockerfile.run`,
@@ -51,5 +53,6 @@ class RunBlock:
 
         Raises:
             Nothing.
+
         """
         self.sequence.append(command)
